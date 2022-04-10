@@ -1,0 +1,12 @@
+# godetector后台地址，无需http前缀
+web: "0.0.0.0:8000"
+# nsqd地址
+nsqd: "127.0.0.1:4150"
+# etcd地址
+etcd: "127.0.0.1:2379"
+strategy:
+  "nsfw":    "or(equal(argmax(nsfw(1),nsfw(2),nsfw(3),nsfw(4),nsfw(5)),2),equal(argmax(nsfw(1),nsfw(2),nsfw(3),nsfw(4),nsfw(5)),4))"
+  "protest": "or(pro(1)-0.12,pro(2)-0.12,pro(3)-0.12,pro(4)-0.12,pro(5)-0.12)"
+  "cntext":  "and(cntext(1)-0.7)"
+  "entext":  "or(entext(1)-0.7,entext(2)-0.7,entext(3)-0.7,entext(4)-0.7,entext(5)-0.7,entext(6)-0.7)"
+  "numtext": "and(num(1)*0.1+num(2)*0.1+num(3)*0.3+num(4)*0.1+num(5)*0.1+num(6)*0.1+num(7)*0.2-2)"

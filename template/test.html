@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoDetector违规内容检测</title>
+</head>
+
+<body>
+
+
+<h2>违规图片检测</h2>
+<form action="/image/nsfw" method="POST" class="form-group" enctype="multipart/form-data">
+    <h4>色情图片：</h4>
+    <input type="file" name="file" id="nsfw-image">
+    <input type="submit" value="Submit" class="btn btn-success">
+</form>
+<form action="/image/protest" method="POST" class="form-group" enctype="multipart/form-data">
+    <h4>抗议/暴力图片：</h4>
+    <input type="file" name="file" id="protest-image">
+    <input type="submit" value="Submit" class="btn btn-success">
+</form>
+<h2>违规文本检测</h2>
+<form action="/text/filter" method="POST" class="form-group" enctype="multipart/form-data">
+    <h4>敏感词过滤：</h4>
+    <input type="text" name="text" id="filter-text" size="65">
+    <input type="submit" value="Submit" class="btn btn-success">
+</form>
+<form action="/text/cn" method="POST" class="form-group" enctype="multipart/form-data">
+    <h4>中文文本：</h4>
+    <input type="text" name="text" id="cn-text" size="65">
+    <input type="submit" value="Submit" class="btn btn-success">
+</form>
+<form action="/text/en" method="POST" class="form-group" enctype="multipart/form-data">
+    <h4>英文文本：</h4>
+    <input type="text" name="text" id="en-text" size="65">
+    <input type="submit" value="Submit" class="btn btn-success">
+</form>
+<h2>检测结果 :</h2>
+<p>{{.}}</p>
+<form action="/test/health" method="GET" class="form-group" enctype="multipart/form-data">
+    <h4><input type="submit" value="检测推理端模型状态" class="btn btn-success"/></h4>
+</form>
+
+</body>
+
+</html>

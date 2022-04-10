@@ -1,0 +1,36 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+skinparam dpi 800
+'scale 500 width
+'scale 960 height
+start
+    :用户HTTP请求;
+if (判断内容类型) then (文本)
+ -[dotted]->
+    :违规文本检测\n （待完善）;
+    -[dotted]->
+
+else (图片)
+       :图片预处理;
+       :分发请求到推理端;
+       fork
+           fork
+               :色情图片检测;
+           fork again
+               :抗议/暴恐图片检测;
+           end fork
+       fork again
+           while (处理超时？) is (否)
+               :继续等待;
+           endwhile (是)
+       end merge
+endif
+:处理结果生成报告;
+:HTTP返回建议;
+
+stop
+@enduml
+
+
+
+

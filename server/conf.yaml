@@ -1,0 +1,10 @@
+# nsqd地址
+nsqd: "localhost:4150"
+# etcd地址
+etcd: "localhost:2379"
+# torchserve后台地址，需http前缀
+ts:
+  nsfw: "http://192.168.192.110:8080"
+  protest: "http://192.168.192.110:8080"
+  cntext: "http://192.168.192.110:8080"
+  entext: "http://192.168.192.110:8080"

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoDetector违规内容检测</title>
+</head>
+
+<body>
+<h2>违规图片检测</h2>
+<form action="/nsq/image" method="POST" class="form-group" enctype="multipart/form-data">
+    <input type="file" name="file" id="file">
+    <input type="submit" value="Submit" name="submit" class="btn btn-success">
+</form>
+<h2>违规文本检测</h2>
+<form action="/nsq/text" method="POST" class="form-group" enctype="multipart/form-data">
+
+    <input type="text" name="text" id="text" size="65">
+
+    <input type="submit" value="Submit" name="submit" class="btn btn-success">
+</form>
+<h2>自定义阻止策略</h2>
+<form action="/admin/strategy" method="POST" class="form-group" enctype="multipart/form-data">
+    <div>
+        <b>nsfw strategy:</b>
+        <br>
+        <input type="text" name="nsfw" id="nsfw" size="100"
+               value="or(equal(argmax(nsfw(1),nsfw(2),nsfw(3),nsfw(4),nsfw(5)),2),equal(argmax(nsfw(1),nsfw(2),nsfw(3),nsfw(4),nsfw(5)),4))">
+    </div>
+    <div>
+        <b>protest strategy:</b>
+        <br>
+        <input type="text" name="protest" id="protest" size="100"
+               value="or(pro(1)-0.12,pro(2)-0.12,pro(3)-0.12,pro(4)-0.12,pro(5)-0.12)">
+    </div>
+    <div>
+        <b>chinese text strategy:</b>
+        <br>
+        <input type="text" name="cntext" id="cntext" size="100" value="and(cntext(1)-0.7)">
+    </div>
+    <div>
+        <b>english text strategy:</b>
+        <br>
+        <input type="text" name="entext" id="entext" size="100"
+               value="or(entext(1)-0.7,entext(2)-0.7,entext(3)-0.7,entext(4)-0.7,entext(5)-0.7,entext(6)-0.7)">
+    </div>
+    <div>
+        <b>filter text strategy:</b>
+        <br>
+        <input type="text" name="numtext" id="numtext" size="100"
+               value="and(num(1)*0.1+num(2)*0.1+num(3)*0.3+num(4)*0.1+num(5)*0.1+num(6)*0.1+num(7)*0.2-2)">
+    </div>
+    <br>
+    <input type="submit" value="Submit" name="submit" class="btn btn-success">
+</form>
+</body>
+
+</html>
+
+
+
+
+
+

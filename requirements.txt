@@ -1,0 +1,9 @@
+torch
+torch-model-archiver
+torchserve
+torchtext
+torchvision
+transformers
+captum
+
+
