@@ -1,0 +1,29 @@
+@startuml
+skinparam dpi 512
+participant 推理端proxy as proxy
+queue       NSQ消息队列       as nsq
+database    Etcd数据库    as etcd
+participant 推理端model as model
+== 初始化 ==
+activate proxy
+proxy -> proxy: 读取配置文件\n初始化消费者
+note right : 消费者承担监听消息队列\n和执行钩子函数的作用
+proxy -> nsq: 连接NSQ请求
+activate nsq
+proxy -> etcd: 连接Etcd请求
+activate etcd
+nsq -->proxy : 连接NSQ响应
+etcd -->proxy : 连接Etcd响应
+== 重复 ==
+nsq -> proxy: 推送消息（Topic+Data）
+note right : Topic指消息的主题\nData指违规内容数据
+proxy -> proxy: 执行Topic钩子函数
+proxy -> model: 发送消息Data，请求模型推理
+activate model
+model -> model: TorchServe模型推理
+model --> proxy: 响应JSON格式推理结果
+deactivate model
+proxy -> etcd: 发送推理结果
+etcd -> etcd: 缓存结果
+note right : 缓存有效期5min
+@enduml

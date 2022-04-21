@@ -1,7 +1,7 @@
 @startuml
 'https://plantuml.com/use-case-diagram
 
-skinparam dpi 512
+skinparam dpi 800
 'scale 1080 width
 'scale 960 height
 

@@ -1,0 +1,35 @@
+@startuml
+skinparam dpi 800
+actor 开发者或管理员 as user
+participant Web后台proxy as proxy
+database    Etcd数据库    as etcd
+queue       NSQ消息队列       as nsq
+== 初始化 ==
+activate proxy
+proxy -> proxy: 读取配置文件\n初始化生产者
+note right : 生产者承担发送消息到\n对应Topic队列的作用
+proxy -> nsq: 连接NSQ请求
+activate nsq
+proxy -> etcd: 连接Etcd请求
+activate etcd
+nsq -->proxy : 连接NSQ响应
+etcd -->proxy : 连接Etcd响应
+== 重复 ==
+user -> proxy: 违规内容检测请求
+proxy -> etcd: 请求缓存结果
+alt 缓存命中
+etcd --> proxy: 响应缓存结果
+else 缓存未命中
+etcd --> proxy: 响应空数据
+proxy -> nsq: 发送消息（Topic+Data）
+note right : Topic指消息的主题\nData指违规内容数据
+loop 未超时且响应为空
+    proxy -> etcd: 请求推理结果
+    etcd --> proxy: 响应结果
+        note right : 推理端成功返回后会设\n置原始结果到Etcd中
+end
+end
+proxy -> proxy: 根据阻止策略处理结果
+proxy -> user: 响应违规内容检测结果
+
+@enduml
