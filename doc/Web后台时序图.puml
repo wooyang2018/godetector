@@ -1,5 +1,5 @@
 @startuml
-skinparam dpi 800
+'skinparam dpi 800
 actor 开发者或管理员 as user
 participant Web后台proxy as proxy
 database    Etcd数据库    as etcd
@@ -26,7 +26,7 @@ note right : Topic指消息的主题\nData指违规内容数据
 loop 未超时且响应为空
     proxy -> etcd: 请求推理结果
     etcd --> proxy: 响应结果
-        note right : 推理端成功返回后会设\n置原始结果到Etcd中
+    note right : 推理端成功返回后会设\n置原始结果到Etcd中
 end
 end
 proxy -> proxy: 根据阻止策略处理结果

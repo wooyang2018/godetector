@@ -1,0 +1,46 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+'skinparam dpi 800
+'scale 1080 width
+'scale 960 height
+
+:管理员: as Admin
+:开发者: as User
+
+package "Web后台" {
+    usecase "敏感词过滤" as W1
+    usecase "违规内容检测请求" as W2
+    usecase "检测结果处理" as W3
+    usecase "阻止策略自定义" as W4
+    usecase "系统状态监控" as W5
+    usecase "推理端测试" as W6
+    package "机器学习推理端" {
+        usecase "色情图片检测" as ML1
+        usecase "抗议/暴恐图片检测" as ML2
+        usecase "中文/英文违规文本检测" as ML3
+    }
+
+    note right of W3
+    根据自定义策略处理结果，返回针对违规内容的建议
+    end note
+
+}
+
+Admin --> W5
+Admin --> W2
+Admin --> W4
+Admin --> W6
+User --> W2
+
+W2 ..> ML1 :<<include>>
+W2 ..> ML2 :<<include>>
+W2 ..> ML3 :<<include>>
+W2 ..> W1 :<<include>>
+
+W3 .up.>W1 :<<extend>>
+W3 .up.>ML1 :<<extend>>
+W3 .up.>ML2 :<<extend>>
+W3 .up.>ML3 :<<extend>>
+
+@enduml

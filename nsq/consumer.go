@@ -37,7 +37,9 @@ type EnTextHandler struct {
 
 func (h *NsfwHandler) NsfwImageDetect(data []byte) string {
 	TSNsfwModel := h.TsAddr + "/predictions/nsfw_model"
+	//新建对TorchServe的POST请求
 	request := common.NewTSRequest(TSNsfwModel, nil, data)
+	//获取原始推理结果返回
 	rawContent := common.GetHttpResponse(request)
 	return rawContent
 }

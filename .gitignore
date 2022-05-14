@@ -4,3 +4,4 @@ godetector
 go.sum
 server/server.exe
 server/server
+/.idea

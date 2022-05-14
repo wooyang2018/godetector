@@ -1,0 +1,50 @@
+@startuml
+'https://plantuml.com/class-diagram
+'skinparam dpi 800
+class ServiceHandler {
+	ProducerHandler nsqHandler
+	EtcdHandler etcdHandler
+	MathAnalyzer mathAnalyzer
+	FilterHandler filterHandler
+	ServiceResponse NsqImageSend(byte[] image)
+    ServiceResponse NsqTextSend(string textStr)
+}
+MathAnalyzer -* ServiceHandler
+ServiceHandler .> ServiceResponse
+ServiceHandler *--- FilterHandler
+ServiceHandler *-- EtcdHandler
+ServiceHandler *-- ProducerHandler
+class ServiceResponse {
+	bool IsIllegal
+	map[string]TsResponse Contents
+	string Reason
+}
+class ProducerHandler {
+	Producer producer
+	string nsqAddr
+	void Publish(NsqRequest request)
+}
+class Producer {
+void Publish(string topic, byte[] body)
+}
+ProducerHandler *-- Producer
+class NsqRequest {
+	string Topic
+	string Data
+}
+ProducerHandler .> NsqRequest
+class EtcdHandler {
+	Client client
+	int64 minLeaseTTL
+	int64 getLoopTTL
+	string etcdAddr
+	void PutWithLease(string key, string value)
+	string GetWithLoop(string key)
+}
+
+class Client {
+    void Put(string key, string val)
+    string Get(string key)
+}
+EtcdHandler *-- Client
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+'skinparam dpi 512
+class FilterHandler {
+	map[string]Filter filters
+	map[string]string dictPath
+}
+FilterHandler *- Filter
+class Filter {
+	Trie trie
+	int64 buildVer
+	int64 updatedVer
+	void LoadWordDict(string path)
+}
+Filter *-- Trie
+
+class Trie {
+	Node Root
+	void BuildFailureLinks()
+	string[] FindAll(string text)
+	void AddWord(string word)
+}
+Trie -> Node
+
+class Node {
+	bool isRootNode
+	bool isPathEnd
+	rune Character
+	map[rune]Node Children
+	Node Failure
+	Node Parent
+	int depth
+}
+Node --> Node
+@enduml

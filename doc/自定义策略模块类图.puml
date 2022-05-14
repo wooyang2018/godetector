@@ -1,0 +1,62 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+'skinparam dpi 800
+class MathAnalyzer {
+	Input input
+	map[string]string raw
+	map[string]ASTHandler ast
+	void buildAST(string key,raw string)
+	map[string]float64 ExprASTResult()
+}
+
+class Input {
+	float64[] nsfw
+	float64[] protest
+	float64[] cntext
+	float64[] entext
+	float64[] numtext
+}
+MathAnalyzer *-- Input
+class ASTHandler {
+	Token[] Parse(string expr)
+	AST NewAST(Token[] toks, string expr)
+	ExprAST ParseExpression(AST)
+}
+ASTHandler ..> Token
+ASTHandler ..> AST
+ASTHandler ..> ExprAST
+MathAnalyzer *- ASTHandler
+class Token {
+	string Tok
+	string Type
+	int Flag
+	int Offset
+}
+class AST  {
+	Token[] Tokens
+	string source
+	Token currTok
+	int currIndex
+	int depth
+}
+AST *- Token
+interface ExprAST  {
+	string toStr()
+}
+class NumberExprAST  {
+	float64 Val
+	string Str
+}
+class NumberExprAST implements ExprAST
+class BinaryExprAST  {
+	string Op
+	string Lhs
+	ExprAST Rhs
+}
+class BinaryExprAST implements ExprAST
+class FunCallerExprAST  {
+	string Name
+	ExprAST[] Arg
+}
+class FunCallerExprAST implements ExprAST
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/class-diagram
+'skinparam dpi 800
+class ConsumerHandler{
+	map[string]Consumer consumers
+	string nsqdAddr
+	string[] topics
+}
+class Consumer{
+void AddHandler(Handler handler)
+}
+ConsumerHandler *-- Consumer
+interface Handler {
+	void HandleMessage(Message message)
+}
+Consumer ..> Handler
+class NsfwHandler  {
+	string EtcdAddr
+	string TsAddr
+}
+class NsfwHandler implements Handler
+class ProtestHandler  {
+	string EtcdAddr
+	string TsAddr
+}
+class ProtestHandler implements Handler
+class CnTextHandler  {
+	string EtcdAddr
+	string TsAddr
+}
+class CnTextHandler implements Handler
+class EnTextHandler  {
+	string EtcdAddr
+	string TsAddr
+}
+class EnTextHandler implements Handler
+
+@enduml

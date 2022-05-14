@@ -1,0 +1,26 @@
+@startuml
+'skinparam dpi 800
+start
+    :用户HTTP请求;
+if (判断内容类型) then (文本)
+    fork
+       :分发请求到推理端;
+        fork
+            :中文违规文本检测;
+        fork again
+            :英文违规文本检测;
+        end fork
+    fork again
+        :加载敏感词典;
+        :敏感词过滤;
+    end fork
+
+else (图片)
+    -[dotted]->
+    :违规图片检测\n （待完善）;
+    -[dotted]->
+endif
+:处理结果生成报告;
+:HTTP返回建议;
+stop
+@enduml

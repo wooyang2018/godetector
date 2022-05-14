@@ -1,0 +1,5 @@
+POST http://172.28.48.170:8000/nsq/text
+Connection: keep-alive
+Content-Length: 369
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary0Pt2uqAZvkcZ1qCL
+@cn_text_test.json
