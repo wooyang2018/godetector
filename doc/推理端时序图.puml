@@ -1,5 +1,5 @@
 @startuml
-'skinparam dpi 512
+skinparam dpi 512
 participant 推理端proxy as proxy
 queue       NSQ消息队列       as nsq
 database    Etcd数据库    as etcd

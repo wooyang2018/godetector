@@ -1,6 +1,6 @@
 @startuml
 'https://plantuml.com/activity-diagram-beta
-'skinparam dpi 800
+skinparam dpi 800
 'scale 500 width
 'scale 960 height
 start
