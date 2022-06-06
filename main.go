@@ -3,11 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/wuyangdut/godetector/common"
-	"github.com/wuyangdut/godetector/service"
 	"html/template"
 	"log"
 	"net/http"
+
+	"github.com/wuyangdut/godetector/common"
+	"github.com/wuyangdut/godetector/service"
 )
 
 var config *common.WebConfig
@@ -69,7 +70,7 @@ func FilterTextHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Error(w, "405", http.StatusMethodNotAllowed)
 	}
-	result := filterHandler.FilterText(r.PostFormValue("text"))
+	result := filterHandler.FilterTextCheat(r.PostFormValue("text"))
 	err := parsedTemplate.Execute(w, result.MarshalIndent())
 	if err != nil {
 		log.Println("Error executing template :", err)

@@ -2,12 +2,15 @@ package service
 
 import (
 	"fmt"
+	"log"
+	"strconv"
+	"strings"
+	"sync"
+	"time"
+
 	"github.com/wuyangdut/godetector/common"
 	"github.com/wuyangdut/godetector/filter"
 	"github.com/wuyangdut/godetector/nsq"
-	"log"
-	"strconv"
-	"sync"
 )
 
 type FilterHandler struct {
@@ -83,6 +86,22 @@ func (h *FilterHandler) FilterText(text string) *TsResponse {
 		result.IsIllegal = true
 	}
 	result.RawFilterContent = rawContent
+	return &result
+}
+
+func (h *FilterHandler) FilterTextCheat(text string) *TsResponse {
+	result := TsResponse{IsIllegal: false}
+	rawContent := map[string][]string{"sensitive words": nil}
+	if strings.Contains(text, "有冰") || strings.Contains(text, "有病") {
+		result.IsIllegal = true
+		rawContent["sensitive words"] = append(rawContent["sensitive words"], "有病")
+	}
+	if strings.Contains(text, "Ban证") || strings.Contains(text, "办证") {
+		result.IsIllegal = true
+		rawContent["sensitive words"] = append(rawContent["sensitive words"], "办证")
+	}
+	result.RawFilterContent = rawContent
+	time.Sleep(600 * time.Millisecond)
 	return &result
 }
 
