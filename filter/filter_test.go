@@ -41,8 +41,3 @@ func TestLoadNetWordDict(t *testing.T) {
 		t.Errorf("load dict empty")
 	}
 }
-
-func TestGetDefaultFilter(t *testing.T) {
-	filter := GetDefaultFilter()
-	t.Log(filter.FindAll("你个绿毛龟还是先去医院把龟头疱疹和鸡儿皮包茎治好，你那袖珍鸡巴用显微镜去找不知道能不能找到。 "))
-}
